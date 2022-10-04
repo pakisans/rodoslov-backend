@@ -1,8 +1,8 @@
 doctrine:
     dbal:
         driver: 'pdo_mysql'
-            server_version: '5.7'
-            charset: UTF8
+        server_version: '5.7'
+        charset: UTF8
 
         url: '%env(resolve:DATABASE_URL)%'
 
@@ -11,14 +11,20 @@ doctrine:
         #server_version: '13'
     orm:
         auto_generate_proxy_classes: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        dql:
+            string_functions:
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                YEAR: DoctrineExtensions\Query\Mysql\Year
+                DAY: DoctrineExtensions\Query\Mysql\Day
         mappings:
-            App:
+            App\Core:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                type: yml
+                dir: '%kernel.project_dir%/config/doctrine/core'
+                prefix: 'App\Core\Entity'
+                alias: AppCore
 
 when@test:
     doctrine:

@@ -1,0 +1,29 @@
+parameters:
+  domain: 'https://localhost:3001'
+
+  allowed_origins: '*'
+  image_slot: 5000
+  locale: 'en'
+  per_page: 30
+
+  database_url: '%env(DATABASE_URL)%'
+
+  # OAuth
+
+  client_id: '%env(CLIENT_ID)%'
+
+  client_secret: '%env(CLIENT_SECRET)%'
+
+  token_expire: '%env(TOKEN_EXPIRE)%'
+
+
+  # MAIL
+
+  mailer_host: '%env(MAILER_HOST)%'
+  mailer_port: '%env(MAILER_PORT)%'
+  mailer_security: '%env(MAILER_SECURITY)%'
+  mailer_auth_mode: '%env(MAILER_AUTH_MODE)%'
+  mailer_user: '%env(MAILER_USER)%'
+  mailer_username: '%env(MAILER_USERNAME)%'
+  mailer_password: '%env(MAILER_PASSWORD)%'
+

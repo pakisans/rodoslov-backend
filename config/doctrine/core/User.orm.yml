@@ -1,0 +1,58 @@
+App\Core\Entity\User:
+  type: entity
+  table: user
+  repositoryClass: App\Core\Repository\UserRepository
+
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO}
+
+  fields:
+    email:
+      type: string
+      length: 255
+      nullable: true
+    password:
+      type: string
+      length: 255
+      nullable: true
+    token:
+      type: string
+      length: 255
+      nullable: true
+    tokenExpire:
+      type: bigint
+      nullable: true
+      column: token_expire
+      options:
+        unsigned: true
+    passwordResetToken:
+      column: password_reset_token
+      type: string
+      length: 255
+      nullable: true
+    registrationToken:
+      column: registration_token
+      type: string
+      length: 255
+      nullable: true
+    passwordResetTokenRequestedAt:
+      column: password_reset_token_requested_at
+      type: bigint
+      length: 255
+      nullable: true
+      options:
+        unsigned: true
+    userType:
+      type: integer
+      nullable: false
+    date_created:
+      type: datetime
+      nullable: false
+    date_updated:
+      type: datetime
+      nullable: false
+    deleted:
+      type: boolean
+      nullable: false

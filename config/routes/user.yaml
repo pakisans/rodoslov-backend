@@ -1,0 +1,19 @@
+user_login:
+  path: /oauth/v2/token
+  controller: \App\Core\Controller\UserController::getTokenAction
+  methods: [POST]
+
+user_current:
+  path: /api/users/current
+  controller: App\Core\Controller\UserController::getCurrentUserAction
+  methods: [GET]
+
+user_register:
+  path: /api/users
+  controller: App\Core\Controller\UserController::registrationAction
+  methods: [POST]
+
+user_activate:
+  path: /api/users/activate/{token}
+  controller: App\Core\Controller\UserController::activateAction
+  methods: [PATCH]

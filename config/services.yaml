@@ -1,9 +1,8 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-
 # Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
-parameters:
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+imports:
+    - { resource: parameters.yml }
+
 
 services:
     # default configuration for services in *this* file
@@ -11,14 +10,54 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
+        # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/'
+    App\Core\:
+        resource:  '../src/Core'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
+            - '../src/Core/DependencyInjection/'
+            - '../src/Core/Entity/'
+            - '../src/Core/Kernel.php-fpm'
+            - '../src/Core/Tests/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Core\Controller\:
+        resource: '../src/Core/Controller'
+        tags: ['controller.service_arguments', "@service_container"]
+
+    App\Core\EventListener\EntityListener:
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'prePersist'
+            -
+                name: 'doctrine.event_listener'
+                event: 'preUpdate'
+
+    App\Core\API\Factory\ApiFactory:
+        arguments: ["@doctrine.orm.entity_manager", "@service_container", "@logger"]
+
+    app.cors.listener:
+        class: App\Core\EventListener\CorsListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest , priority: 100}
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -100}
+
+
+    app.authorization.service:
+        class: App\Core\Service\AuthorizationService
+        arguments: [ "@doctrine.orm.entity_manager", "@service_container", "@logger" ]
+        public: true
+
+    app.user.service:
+        class: App\Core\Service\UserService
+        arguments: [ "@doctrine.orm.entity_manager", "@service_container", "@logger" ]
+        public: true
+
+    gedmo.listener.sluggable:
+        class: Gedmo\Sluggable\SluggableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
