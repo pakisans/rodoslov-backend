@@ -1,0 +1,8 @@
+App\Core\Entity\Family:
+  exclusion_policy: ALL
+  properties:
+    id:
+      expose: true
+    nameOfFamily:
+      expose: true
+      serialized_name: familyName

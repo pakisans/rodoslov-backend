@@ -8,30 +8,21 @@ class BaseEntityController extends BaseController {
     protected $handlerType;
 
     public function getlistAction(Request $request) {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
         $handler = $this->getHandler($request, $this->handlerType);
         return $handler->getList();
     }
 
-    public function getAllAction(Request $request)
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
+    public function getAllAction(Request $request){
         $handler = $this->getHandler($request, $this->handlerType);
         return $handler->getAll();
     }
 
     public function getAction(Request $request) {
-
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
         $handler = $this->getHandler($request, $this->handlerType);
         return $handler->get();
     }
 
     public function addAction(Request $request) {
-
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $handler = $this->getHandler($request, $this->handlerType);
@@ -39,7 +30,6 @@ class BaseEntityController extends BaseController {
     }
 
     public function editAction(Request $request) {
-
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $handler = $this->getHandler($request, $this->handlerType);
@@ -47,7 +37,6 @@ class BaseEntityController extends BaseController {
     }
 
     public function deleteAction(Request $request) {
-
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $handler = $this->getHandler($request, $this->handlerType);

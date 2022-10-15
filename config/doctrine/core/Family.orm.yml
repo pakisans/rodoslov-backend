@@ -1,0 +1,24 @@
+App\Core\Entity\Family:
+  type: entity
+  table: family
+  repositoryClass: App\Core\Repository\FamilyRepository
+
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO}
+
+  fields:
+    nameOfFamily:
+      type: string
+      length: 255
+      nullable: false
+    date_created:
+      type: datetime
+      nullable: false
+    date_updated:
+      type: datetime
+      nullable: false
+    deleted:
+      type: boolean
+      nullable: false

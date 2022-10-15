@@ -13,6 +13,9 @@ class User extends Entity implements UserInterface {
     private $passwordResetToken;
     private $registrationToken;
     private $passwordResetTokenRequestedAt;
+    private $firstName;
+    private $lastName;
+    private $fullName;
 
     public function getEmail(){
         return $this->email;
@@ -100,4 +103,26 @@ class User extends Entity implements UserInterface {
     {
         // TODO: Implement eraseCredentials() method.
     }
+
+    public function getFirstName(){
+        return $this->firstName;
+    }
+
+    public function setFirstName($firstName): void{
+        $this->firstName = $firstName;
+    }
+
+    public function getLastName(){
+        return $this->lastName;
+    }
+
+    public function setLastName($lastName): void{
+        $this->lastName = $lastName;
+    }
+
+
+    public function getFullName(){
+        return $this->getFirstName() .' '. $this->getLastName();
+    }
+
 }

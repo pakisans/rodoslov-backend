@@ -1,0 +1,20 @@
+App\Core\Entity\User:
+  exclusion_policy: ALL
+  properties:
+    id:
+      expose: true
+    email:
+      expose: true
+    firstName:
+      expose: true
+      serialized_name: firstName
+    lastName:
+      expose: true
+      serialized_name: lastName
+    userType:
+      expose: true
+      serialized_name: userType
+  virtual_properties:
+    getFullName:
+      serialized_name: fullName
+      type: string

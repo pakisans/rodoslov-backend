@@ -1,0 +1,19 @@
+get_families:
+  path: /api/families
+  controller: App\Core\Controller\FamilyController::getAllAction
+  methods: [GET]
+
+add_family:
+  path: /api/families
+  controller: App\Core\Controller\FamilyController::addAction
+  methods: [POST]
+
+edit_family:
+  path: /api/family/{id}
+  controller: App\Core\Controller\FamilyController::editAction
+  methods: [PUT]
+
+delete_family:
+  path: /api/family/{id}
+  controller: App\Core\Controller\FamilyController::deleteAction
+  methods: [DELETE]

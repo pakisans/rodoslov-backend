@@ -28,7 +28,7 @@ class UserHandler extends BaseHandler {
     }
 
     public function registration() {
-        if(!isset($this->params->email) || !isset($this->params->password)){
+        if(!isset($this->params->email) || !isset($this->params->firstName) || !isset($this->params->lastName) || !isset($this->params->password)){
             return $this->getParameterMissingResponse();
         }
 

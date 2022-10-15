@@ -1,0 +1,52 @@
+App\Core\Entity\Sheets:
+  type: entity
+  table: sheets
+  repositoryClass: App\Core\Repository\SheetsRepository
+
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO}
+
+  fields:
+    firstName:
+      type: string
+      length: 255
+      nullable: false
+    address:
+      type: string
+      length: 255
+      nullable: true
+    currentLevel:
+      type: integer
+      nullable: false
+    isStructure:
+      type: boolean
+      nullable: false
+    isValid:
+      type: boolean
+      nullable: false
+    dateOfBirth:
+      type: datetime
+      nullable: false
+    dateOfDeath:
+      type: datetime
+      nullable: true
+    photo:
+      type: text
+      nullable: true
+    date_created:
+      type: datetime
+      nullable: false
+    date_updated:
+      type: datetime
+      nullable: false
+    deleted:
+      type: boolean
+      nullable: false
+
+  manyToOne:
+    family:
+      targetEntity: \App\Core\Entity\Family
+      name: family_id
+      referencedColumnName: id

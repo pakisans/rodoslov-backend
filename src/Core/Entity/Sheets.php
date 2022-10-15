@@ -3,7 +3,7 @@
 namespace App\Core\Entity;
 
 class Sheets extends Entity {
-    private $fullName;
+    private $firstName;
     private $currentLevel;
     private $isStructure; // ?????
     private $isValid; // ?????
@@ -11,13 +11,15 @@ class Sheets extends Entity {
     private $dateOfDeath;
     private $address;
     private $photo;
+    private $family;
 
-    public function getFullName(){
-        return $this->fullName;
+
+    public function getFirstName(){
+        return $this->firstName;
     }
 
-    public function setFullName($fullName): void{
-        $this->fullName = $fullName;
+    public function setFirstName($firstName): void{
+        $this->firstName = $firstName;
     }
 
     public function getCurrentLevel(){
@@ -74,5 +76,13 @@ class Sheets extends Entity {
 
     public function setPhoto($photo): void{
         $this->photo = $photo;
+    }
+
+    public function getFamily(){
+        return $this->family;
+    }
+
+    public function setFamily($family): void{
+        $this->family = $family;
     }
 }

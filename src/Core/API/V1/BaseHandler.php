@@ -117,11 +117,13 @@ class BaseHandler {
         return $this->getResponse([], Response::HTTP_CREATED);
     }
 
-    // FUNCTIONALITIES
-
-    public function afterDelete($entity) {
-
+    public function getForbiddenResponse() {
+        return $this->getResponse([
+            'message' => 'permissionMissing'
+        ], Response::HTTP_FORBIDDEN);
     }
+
+    // FUNCTIONALITIES
 
     public function delete() {
 
@@ -165,8 +167,9 @@ class BaseHandler {
     }
 
     public function getAll() {
-        return $this->getResponse(
-            $this->em->getRepository($this->class)->getAll()
+        return $this->getResponse([
+            'result' => $this->em->getRepository($this->class)->getAll()
+        ]
         );
     }
 

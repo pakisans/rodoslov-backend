@@ -13,6 +13,16 @@ App\Core\Entity\User:
       type: string
       length: 255
       nullable: true
+    firstName:
+      type: string
+      length: 255
+      nullable: true
+      column: first_name
+    lastName:
+      type: string
+      length: 255
+      nullable: true
+      column: last_name
     password:
       type: string
       length: 255

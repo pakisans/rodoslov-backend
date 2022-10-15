@@ -1,0 +1,27 @@
+App\Core\Entity\Sheets:
+  exclusion_policy: ALL
+  properties:
+    id:
+      expose: true
+    firstName:
+      expose: true
+      serialized_name: firstName
+    currentLevel:
+      expose: true
+      serialized_name: currentLevel
+    isStructure:
+      expose: true
+      serialized_name: isStructure
+    isValid:
+      expose: true
+      serialized_name: isValid
+    dateOfBirth:
+      expose: true
+      serialized_name: dateOfBirth
+    dateOfDeath:
+      expose: true
+      serialized_name: dateOfDeath
+    photo:
+      expose: true
+    family:
+      expose: true
