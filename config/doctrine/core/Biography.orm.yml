@@ -1,0 +1,20 @@
+App\Core\Entity\Biography:
+  type: entity
+  table: biography
+  repositoryClass: App\Core\Repository\BiographyRepository
+
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO}
+
+  fields:
+    date_created:
+      type: datetime
+      nullable: false
+    date_updated:
+      type: datetime
+      nullable: false
+    deleted:
+      type: boolean
+      nullable: false

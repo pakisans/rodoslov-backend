@@ -23,9 +23,6 @@ App\Core\Entity\Sheets:
     isStructure:
       type: boolean
       nullable: false
-    isValid:
-      type: boolean
-      nullable: false
     dateOfBirth:
       type: datetime
       nullable: false

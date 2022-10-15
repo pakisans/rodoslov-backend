@@ -6,7 +6,6 @@ class Sheets extends Entity {
     private $firstName;
     private $currentLevel;
     private $isStructure; // ?????
-    private $isValid; // ?????
     private $dateOfBirth;
     private $dateOfDeath;
     private $address;
@@ -36,14 +35,6 @@ class Sheets extends Entity {
 
     public function setIsStructure($isStructure): void{
         $this->isStructure = $isStructure;
-    }
-
-    public function getIsValid(){
-        return $this->isValid;
-    }
-
-    public function setIsValid($isValid): void{
-        $this->isValid = $isValid;
     }
 
     public function getDateOfBirth(){
