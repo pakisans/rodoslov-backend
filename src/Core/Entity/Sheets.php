@@ -10,6 +10,7 @@ class Sheets extends Entity {
     private $dateOfDeath;
     private $address;
     private $photo;
+
     private $family;
 
 

@@ -54,12 +54,10 @@ class FamilyHandler extends BaseHandler {
             return $this->getParameterMissingResponse();
         }
 
-        $family->setFamilyName($this->params->familyName);
+        $family->setNameOfFamily($this->params->familyName);
 
         $this->em->flush();
 
-        return $this->getResponse([
-            'family' => $family
-        ]);
+        return $this->getSuccessResponse();
     }
 }

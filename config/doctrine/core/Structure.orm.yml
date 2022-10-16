@@ -1,7 +1,7 @@
-App\Core\Entity\Sheets:
+App\Core\Entity\Structure:
   type: entity
-  table: sheets
-  repositoryClass: App\Core\Repository\SheetsRepository
+  table: structure
+  repositoryClass: App\Core\Repository\StructureRepository
 
   id:
     id:
@@ -9,29 +9,16 @@ App\Core\Entity\Sheets:
       generator: { strategy: AUTO}
 
   fields:
-    firstName:
+    version:
       type: string
-      length: 255
+      length: 50
       nullable: false
-    address:
-      type: string
-      length: 255
-      nullable: true
-    currentLevel:
-      type: integer
-      nullable: false
-    isStructure:
-      type: boolean
-      nullable: false
-    dateOfBirth:
+    fromDate:
       type: datetime
       nullable: false
-    dateOfDeath:
+    toDate:
       type: datetime
-      nullable: true
-    photo:
-      type: text
-      nullable: true
+      nullable: false
     date_created:
       type: datetime
       nullable: false
@@ -46,4 +33,12 @@ App\Core\Entity\Sheets:
     family:
       targetEntity: \App\Core\Entity\Family
       name: family_id
+      referencedColumnName: id
+    subordinate:
+      targetEntity: \App\Core\Entity\Sheets
+      name: subordinate_id
+      referencedColumnName: id
+    superior:
+      targetEntity: \App\Core\Entity\Sheets
+      name: superior_id
       referencedColumnName: id

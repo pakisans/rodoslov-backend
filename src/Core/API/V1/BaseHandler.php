@@ -143,8 +143,6 @@ class BaseHandler {
 
         $this->em->flush();
 
-        $this->afterDelete($entity);
-
         return $this->getNoContentResponse();
     }
 
