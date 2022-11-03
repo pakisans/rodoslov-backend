@@ -19,7 +19,7 @@ App\Core\Entity\Sheets:
       nullable: true
     currentLevel:
       type: integer
-      nullable: false
+      nullable: true
     isStructure:
       type: boolean
       nullable: false

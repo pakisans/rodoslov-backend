@@ -1,0 +1,19 @@
+get-biographies:
+  path: /api/biographies
+  controller: App\Core\Controller\BiographyController::getAllAction
+  methods: [GET]
+
+add-biography:
+  path: /api/biography
+  controller: App\Core\Controller\BiographyController::addAction
+  methods: [POST]
+
+edit-biography:
+  path: /api/biography/{id}
+  controller: App\Core\Controller\BiographyController::editAction
+  methods: [PUT]
+
+delete-biography:
+  path: /api/biography/{id}
+  controller: App\Core\Controller\BiographyController::deleteAction
+  methods: [DELETE]

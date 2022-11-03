@@ -9,6 +9,28 @@ App\Core\Entity\Biography:
       generator: { strategy: AUTO}
 
   fields:
+    dateFrom:
+      type: datetime
+      nullable: false
+    dateTo:
+      type: datetime
+      nullable: true
+    whereIs:
+      type: string
+      length: 255
+      nullable: true
+    biographyDescription:
+      type: string
+      length: 1024
+      nullable: true
+    graveMarker:
+      type: string
+      length: 255
+      nullable: true
+    spouseInformation:
+      type: string
+      length: 255
+      nullabe: true
     date_created:
       type: datetime
       nullable: false
@@ -18,3 +40,9 @@ App\Core\Entity\Biography:
     deleted:
       type: boolean
       nullable: false
+
+  manyToOne:
+    sheets:
+      targetEntity: \App\Core\Entity\Sheets
+      name: sheet_id
+      referencedColumnName: id

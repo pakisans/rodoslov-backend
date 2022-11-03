@@ -16,7 +16,7 @@ class SheetsHandler extends BaseHandler {
         parent::__construct($em, $container, $logger);
     }
 
-    public function getSheetsList(){
+    public function getSheetByFamily(){
         $familyId = $this->getParameter('familyId');
 
         $sheets = $this->em->getRepository($this->class)->getSheetByFamily($familyId);
@@ -25,8 +25,8 @@ class SheetsHandler extends BaseHandler {
     }
 
     public function add(){
-        if(!isset($this->params->firstName) || !isset($this->params->currentLevel) || !isset($this->params->isStructure) || !isset($this->params->isValid) || !isset($this->params->dateOfBirth) ||
-              !isset($this->params->firstName) || !isset($this->params->familyId)){
+        if(!isset($this->params->firstName) || !isset($this->params->currentLevel)  || !isset($this->params->dateOfBirth) ||
+               !isset($this->params->familyId)){
             return $this->getParameterMissingResponse();
         }
 
@@ -35,16 +35,19 @@ class SheetsHandler extends BaseHandler {
         $entity->setFirstName($this->params->firstName);
         $entity->setAddress($this->params->address);
         $entity->setDateOfBirth(new \DateTime($this->params->dateOfBirth));
+        $entity->setIsStructure($this->params->isStructure);
+        $entity->setCurrentLevel($this->params->currentLevel);
 
         if(isset($this->params->dateOfDeath)){
             $entity->setDateOfDeath(new \DateTime($this->params->dateOfDeath));
         }
 
-        $entity->setPhoto($this->params->photo);
+        if(isset($this->params->photo)){
+            $entity->setPhoto($this->params->photo);
+        }
 
         $family = $this->em->getRepository(Family::class)->get($this->params->familyId);
         $entity->setFamily($family);
-
 
         $this->em->persist($entity);
         $this->em->flush();
@@ -53,11 +56,37 @@ class SheetsHandler extends BaseHandler {
     }
 
     public function edit(){
-        $id = $this->idSelector;
+        $id = $this->params->id;
 
-        if(!isset($this->params->firstName) || !isset($this->params->currentLevel) || !isset($this->params->isStructure) || !isset($this->params->isValid) || !isset($this->params->dateOfBirth) ||
-              !isset($this->params->firstName) || !isset($this->params->familyId)){
+        if(!isset($this->params->firstName) || !isset($this->params->currentLevel)  || !isset($this->params->dateOfBirth) ||
+            !isset($this->params->familyId)){
             return $this->getParameterMissingResponse();
         }
+
+        $sheet = $this->em->getRepository($this->class)->get($id);
+
+        $sheet->setFirstName($this->params->firstName);
+        $sheet->setAddress($this->params->address);
+        $sheet->setDateOfBirth(new \DateTime($this->params->dateOfBirth));
+        $sheet->setIsStructure($this->params->isStructure);
+        $sheet->setCurrentLevel($this->params->currentLevel);
+        if(isset($this->params->dateOfDeath)){
+            $sheet->setDateOfDeath(new \DateTime($this->params->dateOfDeath));
+        }else{
+            $sheet->setDateOfDeath(null);
+        }
+
+        if(isset($this->params->photo)){
+            $sheet->setPhoto($this->params->photo);
+        }
+
+        $family = $this->em->getRepository(Family::class)->get($this->params->familyId);
+        $sheet->setFamily($family);
+
+        $this->em->flush();
+
+        return $this->getResponse([
+            'sheet'=> $sheet
+        ]);
     }
 }

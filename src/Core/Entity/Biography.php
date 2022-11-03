@@ -10,6 +10,8 @@ class Biography extends Entity {
     private $graveMarker;
     private $spouseInformation;
 
+    private $sheets;
+
     public function getDateFrom(){
         return $this->dateFrom;
     }
@@ -56,5 +58,13 @@ class Biography extends Entity {
 
     public function setSpouseInformation($spouseInformation): void{
         $this->spouseInformation = $spouseInformation;
+    }
+
+    public function getSheets(){
+        return $this->sheets;
+    }
+
+    public function setSheets($sheets): void{
+        $this->sheets = $sheets;
     }
 }

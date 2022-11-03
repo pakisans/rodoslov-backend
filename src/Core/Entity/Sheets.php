@@ -5,14 +5,13 @@ namespace App\Core\Entity;
 class Sheets extends Entity {
     private $firstName;
     private $currentLevel;
-    private $isStructure; // ?????
+    private $isStructure;
     private $dateOfBirth;
     private $dateOfDeath;
     private $address;
     private $photo;
 
     private $family;
-
 
     public function getFirstName(){
         return $this->firstName;
@@ -76,5 +75,9 @@ class Sheets extends Entity {
 
     public function setFamily($family): void{
         $this->family = $family;
+    }
+
+    public function getFullName(){
+        return $this->getFirstName() .' '. $this->getFamily()->getNameOfFamily();
     }
 }

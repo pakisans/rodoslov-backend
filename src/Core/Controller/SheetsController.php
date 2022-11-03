@@ -15,6 +15,6 @@ class SheetsController extends BaseEntityController {
 
     public function getSheetsListAction(Request  $request){
         $handler = $this->getHandler($request, $this->handlerType);
-        return $handler->getSheetsList();
+        return $handler->getSheetByFamily();
     }
 }

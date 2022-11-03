@@ -1,0 +1,19 @@
+App\Core\Entity\Family:
+  exclusion_policy: ALL
+  properties:
+    id:
+      expose: true
+    version:
+      expose: true
+    fromDate:
+      expose: true
+      serialized_name: fromDate
+    toDate:
+      expose: true
+      serialized_name: toDate
+    family:
+      epose: true
+    subordinate:
+      expose: true
+    superior:
+      expose: true

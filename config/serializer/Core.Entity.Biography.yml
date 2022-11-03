@@ -1,0 +1,23 @@
+App\Core\Entity\Biography:
+  exclusion_policy: ALL
+  properties:
+    id:
+      expose: true
+    dateFrom:
+      expose: true
+      serialized_name: dateFrom
+    dateTo:
+      expose: true
+      serialized_name: dateTo
+    whereIs:
+      expose: true
+      serialized_name: whereIs
+    biographyDescription:
+      expose: true
+      serialized_name: biographyDescription
+    graveMarker:
+      expose: true
+      serialized_name: graveMarker
+    spouseInformation:
+      expose: true
+      serialized_name: spouseInformation

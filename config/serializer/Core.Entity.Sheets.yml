@@ -23,5 +23,12 @@ App\Core\Entity\Sheets:
       serialized_name: dateOfDeath
     photo:
       expose: true
+    address:
+      expose: true
     family:
       expose: true
+
+  virtual_properties:
+    getFullName:
+      serialized_name: fullName
+      type: string

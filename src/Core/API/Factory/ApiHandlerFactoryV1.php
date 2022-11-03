@@ -12,6 +12,8 @@ class ApiHandlerFactoryV1 {
             return $admin ? null : new \App\Core\API\V1\FamilyHandler($em, $container, $logger);
         }else if($type == HandlerType::Sheets){
             return $admin ? null : new \App\Core\API\V1\SheetsHandler($em, $container, $logger);
+        }else if($type == HandlerType::Biography) {
+            return $admin ? null : new \App\Core\API\V1\BiographyHandler($em, $container, $logger);
         }
     }
 }
