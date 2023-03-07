@@ -1,6 +1,6 @@
 get-sheets-by-family:
   path: /api/sheets
-  controller: App\Core\Controller\SheetsController::getSheetsListAction
+  controller: App\Core\Controller\SheetsController::getSheetByFamilyAction
   methods: [GET]
 
 get-sheets:

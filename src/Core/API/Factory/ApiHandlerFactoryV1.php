@@ -14,6 +14,8 @@ class ApiHandlerFactoryV1 {
             return $admin ? null : new \App\Core\API\V1\SheetsHandler($em, $container, $logger);
         }else if($type == HandlerType::Biography) {
             return $admin ? null : new \App\Core\API\V1\BiographyHandler($em, $container, $logger);
+        }else if($type == HandlerType::Structure) {
+            return $admin ? null : new \App\Core\API\V1\StructureHandler($em, $container, $logger);
         }
     }
 }

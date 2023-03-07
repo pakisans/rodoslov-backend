@@ -1,0 +1,9 @@
+get-structure-by-family:
+  path: /api/structure
+  controller: App\Core\Controller\StructureController::getStructureByFamilyAction
+  methods: [GET]
+
+add-structrure:
+  path: /api/structure
+  controller: App\Core\Controller\StructureController::addAction
+  methods: [POST]

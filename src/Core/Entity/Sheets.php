@@ -77,7 +77,17 @@ class Sheets extends Entity {
         $this->family = $family;
     }
 
+    public function renderDateOfDeath($date){
+        if($date){
+            return date_format($date, 'Y');
+        }
+        return '';
+    }
+
     public function getFullName(){
-        return $this->getFirstName() .' '. $this->getFamily()->getNameOfFamily();
+        return $this->getFirstName() .' '.
+            $this->getFamily()->getNameOfFamily() .' '.
+            date_format($this->getDateOfBirth(), 'Y') .' - '.
+            $this->renderDateOfDeath($this->getDateOfDeath());
     }
 }

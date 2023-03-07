@@ -18,11 +18,18 @@ class SheetsHandler extends BaseHandler {
 
     public function getSheetByFamily(){
         $familyId = $this->getParameter('familyId');
+        $superiorId = $this->getParameter('superiorId');
+        if(isset($superiorId)){
+            $sheets = $this->em->getRepository($this->class)->getSubordinates($familyId,$superiorId);
+            return $this->getResponse(['result' => $sheets]);
+        }
 
-        $sheets = $this->em->getRepository($this->class)->getSheetByFamily($familyId);
+        $sheets = $this->em->getRepository($this->class)->getSheetByFamilyId($familyId);
+
 
         return $this->getResponse(['result' => $sheets]);
     }
+
 
     public function add(){
         if(!isset($this->params->firstName) || !isset($this->params->currentLevel)  || !isset($this->params->dateOfBirth) ||
@@ -40,6 +47,8 @@ class SheetsHandler extends BaseHandler {
 
         if(isset($this->params->dateOfDeath)){
             $entity->setDateOfDeath(new \DateTime($this->params->dateOfDeath));
+        }else{
+            $entity->setDateOfDeath(null);
         }
 
         if(isset($this->params->photo)){

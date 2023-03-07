@@ -17,10 +17,19 @@ class StructureHandler extends BaseHandler {
         parent::__construct($em, $container, $logger);
     }
 
+    public function getStructureByFamily(){
+
+        $structures = $this->em->getRepository($this->class)->getStructureByFamilyId($this->getParameter('familyId'));
+
+        return $this->getResponse([
+            'result' => $structures
+        ]);
+    }
+
     public function add(){
         $structure = new Structure();
 
-        if(!isset($this->params->familyId) || !isset($this->params->subordinateId)){
+        if(!isset($this->params->familyId) || !isset($this->params->subordinateId) || !isset($this->params->superiorId)){
             return $this->getParameterMissingResponse();
         }
 
@@ -30,14 +39,29 @@ class StructureHandler extends BaseHandler {
         $superior = $this->em->getRepository(Sheets::class)->get($this->params->superiorId);
         $subordinate = $this->em->getRepository(Sheets::class)->get($this->params->subordinateId);
 
-        if(!isset($this->params->superiorId) && !$superior->getIsStructure()){
-            $structure->setSubordinate($subordinate);
-        }else{
-            $structure->setSubordinate($subordinate);
-            $structure->setSuperior($superior);
-        }
+//        if($superior->getIsStructure()){
+//            return $this->getSubordinateError();
+//        }
+
+        $subordinate->setIsStructure(true);
+
+        $structure->setSuperior($superior);
+        $structure->setSubordinate($subordinate);
+        $structure->setVersion('v1');
+        $structure->setFromDate(new \DateTime());
+        $structure->setToDate(new \DateTime());
+//        if(!isset($this->params->superiorId) && !$superior->getIsStructure()){
+//            $structure->setSubordinate($subordinate);
+//        }else{
+//            $structure->setSubordinate($subordinate);
+//            $structure->setSuperior($superior);
+//        }
         $this->em->persist($structure);
         $this->em->flush();
+
+        return $this->getCreatedResponse([
+            'result' => $structure
+        ]);
     }
 
     public function edit(){

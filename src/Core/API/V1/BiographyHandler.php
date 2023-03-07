@@ -22,8 +22,8 @@ class BiographyHandler extends BaseHandler {
             return $this->getParameterMissingResponse();
         }
         $biography = new Biography();
-        $biography->setDateTo($this->params->dateTo);
-        $biography->setDateFrom($this->params->dateFrom);
+        $biography->setDateFrom(new \DateTime($this->params->dateFrom));
+        $biography->setDateTo(new \DateTime($this->params->dateTo));
         $biography->setBiographyDescription($this->params->biographyDescription);
         $biography->setGraveMarker($this->params->graveMarker);
         $biography->setSpouseInformation($this->params->spouseInformation);
@@ -45,8 +45,8 @@ class BiographyHandler extends BaseHandler {
         }
         $biography = $this->em->getRepository($this->class)->get($this->params->id);
 
-        $biography->setDateTo($this->params->dateTo);
-        $biography->setDateFrom($this->params->dateFrom);
+        $biography->setDateTo(new \DateTime($this->params->dateTo));
+        $biography->setDateFrom(new \DateTime($this->params->dateFrom));
         $biography->setBiographyDescription($this->params->biographyDescription);
         $biography->setGraveMarker($this->params->graveMarker);
         $biography->setSpouseInformation($this->params->spouseInformation);
@@ -54,7 +54,6 @@ class BiographyHandler extends BaseHandler {
 
         $sheet = $this->em->getRepository(Sheets::class)->get($this->params->sheetId);
         $biography->setSheets($sheet);
-
         $this->em->flush();
 
         return $this->getSuccessResponse([

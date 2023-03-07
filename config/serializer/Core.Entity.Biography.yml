@@ -21,3 +21,5 @@ App\Core\Entity\Biography:
     spouseInformation:
       expose: true
       serialized_name: spouseInformation
+    sheets:
+      expose: true

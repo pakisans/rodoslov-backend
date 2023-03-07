@@ -123,6 +123,17 @@ class BaseHandler {
         ], Response::HTTP_FORBIDDEN);
     }
 
+    public function getSubordinateError()
+    {
+        return $this->getResponse([
+            'message' => 'subordinateHasStructure'
+        ], Response::HTTP_BAD_REQUEST);
+    }
+
+    public function getBadRequest(){
+        return $this->getResponse([], Response::HTTP_BAD_REQUEST);
+    }
+
     // FUNCTIONALITIES
 
     public function delete() {

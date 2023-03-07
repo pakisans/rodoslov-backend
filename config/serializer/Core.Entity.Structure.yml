@@ -1,4 +1,4 @@
-App\Core\Entity\Family:
+App\Core\Entity\Structure:
   exclusion_policy: ALL
   properties:
     id:
