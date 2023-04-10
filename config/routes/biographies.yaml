@@ -17,3 +17,8 @@ delete-biography:
   path: /api/biography/{id}
   controller: App\Core\Controller\BiographyController::deleteAction
   methods: [DELETE]
+
+get-biography:
+  path: /api/biography
+  controller: App\Core\Controller\BiographyController::getBiographyByNodeAction
+  methods: [GET]

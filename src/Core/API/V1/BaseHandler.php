@@ -76,8 +76,6 @@ class BaseHandler {
         return $this->serializer;
     }
 
-    /* RESPONSES  */
-
     public function getSuccessResponse() {
         return $this->getResponse([
             'message' => 'success'
@@ -133,8 +131,6 @@ class BaseHandler {
     public function getBadRequest(){
         return $this->getResponse([], Response::HTTP_BAD_REQUEST);
     }
-
-    // FUNCTIONALITIES
 
     public function delete() {
 

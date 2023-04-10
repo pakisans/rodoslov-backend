@@ -17,12 +17,56 @@ class StructureHandler extends BaseHandler {
         parent::__construct($em, $container, $logger);
     }
 
-    public function getStructureByFamily(){
+    public function getParentAndSlibings(){
+        $personId = $this->getParameter('personId');
+        $familyId = $this->getParameter('familyId');
+        $parent = $this->em->getRepository($this->class)->getParent($personId, $familyId);
+        $slibings = [];
 
-        $structures = $this->em->getRepository($this->class)->getStructureByFamilyId($this->getParameter('familyId'));
+        $slibingsRepo = $this->em->getRepository($this->class)->getSlibings($personId, $familyId);
+        if(isset($slibingsRepo)){
+            foreach ($slibingsRepo as $item){
+                array_push($slibings, $item->getSubordinate());
+            }
+        }
 
         return $this->getResponse([
-            'result' => $structures
+            'result' => $parent,
+            'slibings' => $slibings
+        ]);
+    }
+
+    public function getRootByFamily(){
+        $rootElement = $this->em->getRepository(Sheets::class)->getRootSheet($this->getParameter('familyId'));
+        $structures = $this->em->getRepository($this->class)->getChildrenOfRoot($rootElement ? $rootElement[0]->getId() : []);
+        $childrens = [];
+
+        foreach ($structures as $item) {
+            array_push($childrens, $item->getSubordinate());
+        }
+
+        return $this->getResponse([
+            'root' => $rootElement,
+            'childrens' => $childrens
+        ]);
+    }
+
+    public function getChildrens(){
+        $parentId = $this->getParameter('id');
+        $familyId = $this->getParameter('family');
+
+        $childrensRepo = $this->em->getRepository($this->class)->getChildrens($parentId, $familyId);
+
+        $childrens = [];
+
+        if(isset($childrensRepo)){
+            foreach ($childrensRepo as $item) {
+                array_push($childrens, $item->getSubordinate());
+            }
+        }
+
+        return $this->getResponse([
+            "childrens" => $childrens
         ]);
     }
 
@@ -65,6 +109,13 @@ class StructureHandler extends BaseHandler {
     }
 
     public function edit(){
+        $id = $this->params->id;
 
+        if(!isset($this->params->version) || !isset($this->params->currentLevel)  || !isset($this->params->dateOfBirth) ||
+            !isset($this->params->familyId)){
+            return $this->getParameterMissingResponse();
+        }
+
+        $structure = $this->em->getRepository($this->class)->get($id);
     }
 }

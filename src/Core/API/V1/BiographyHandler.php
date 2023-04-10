@@ -23,7 +23,9 @@ class BiographyHandler extends BaseHandler {
         }
         $biography = new Biography();
         $biography->setDateFrom(new \DateTime($this->params->dateFrom));
-        $biography->setDateTo(new \DateTime($this->params->dateTo));
+        if(isset($this->params->dateTo)){
+            $biography->setDateTo(new \DateTime($this->params->dateTo));
+        }
         $biography->setBiographyDescription($this->params->biographyDescription);
         $biography->setGraveMarker($this->params->graveMarker);
         $biography->setSpouseInformation($this->params->spouseInformation);
@@ -45,7 +47,9 @@ class BiographyHandler extends BaseHandler {
         }
         $biography = $this->em->getRepository($this->class)->get($this->params->id);
 
-        $biography->setDateTo(new \DateTime($this->params->dateTo));
+        if(isset($this->params->dateTo)){
+            $biography->setDateTo(new \DateTime($this->params->dateTo));
+        }
         $biography->setDateFrom(new \DateTime($this->params->dateFrom));
         $biography->setBiographyDescription($this->params->biographyDescription);
         $biography->setGraveMarker($this->params->graveMarker);
@@ -58,6 +62,18 @@ class BiographyHandler extends BaseHandler {
 
         return $this->getSuccessResponse([
             'result' => $biography
+        ]);
+    }
+
+    public function getBiographyByNode(){
+        $id = $this->getParameter('id');
+        if($id == 'root'){
+            $id = $this->getParameter('mainId');
+        }
+
+        return $this->getResponse([
+            'result' => $this->em->getRepository($this->class)->getNode($id),
+            'id' => $id
         ]);
     }
 }

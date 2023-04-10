@@ -14,8 +14,18 @@ class StructureController extends BaseEntityController {
         parent::__construct($apiFactory, $authorizationService);
     }
 
-    public function getStructureByFamilyAction(Request  $request){
+    public function getRootByFamilyAction(Request  $request){
         $handler = $this->getHandler($request, $this->handlerType);
-        return $handler->getStructureByFamily();
+        return $handler->getRootByFamily();
+    }
+
+    public function getParentAndSlibingsAction(Request  $request){
+        $handler = $this->getHandler($request, $this->handlerType);
+        return $handler->getParentAndSlibings();
+    }
+
+    public function getChildrensAction(Request $request){
+        $handler = $this->getHandler($request, $this->handlerType);
+        return $handler->getChildrens();
     }
 }

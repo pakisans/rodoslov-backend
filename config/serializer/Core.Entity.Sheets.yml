@@ -28,6 +28,7 @@ App\Core\Entity\Sheets:
     family:
       expose: true
 
+
   virtual_properties:
     getFullName:
       serialized_name: fullName

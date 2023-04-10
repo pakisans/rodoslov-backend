@@ -32,13 +32,13 @@ App\Core\Entity\Structure:
   manyToOne:
     family:
       targetEntity: \App\Core\Entity\Family
-      name: family_id
+      name: family
       referencedColumnName: id
     subordinate:
       targetEntity: \App\Core\Entity\Sheets
-      name: subordinate_id
+      name: subordinate
       referencedColumnName: id
     superior:
       targetEntity: \App\Core\Entity\Sheets
-      name: superior_id
+      name: superior
       referencedColumnName: id

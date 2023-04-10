@@ -11,4 +11,14 @@ class BiographyRepository extends BaseRepository {
         $this->class = Biography::class;
         parent::__construct($registry);
     }
+
+    public function getNode($id, $deleted = false){
+        return $this->createQueryBuilder('b')
+            ->where('b.sheets = :id')
+            ->andWhere('b.deleted = :deleted')
+            ->setParameter('id' , $id)
+            ->setParameter('deleted', $deleted)
+            ->getQuery()
+            ->getResult();
+    }
 }

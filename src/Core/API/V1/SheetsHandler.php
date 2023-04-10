@@ -16,6 +16,16 @@ class SheetsHandler extends BaseHandler {
         parent::__construct($em, $container, $logger);
     }
 
+    public function searchSheets(){
+        $query = $this->getParameter('query');
+
+        $sheetsRepo = $this->em->getRepository($this->class)->searchSheets($query);
+
+        return $this->getResponse([
+            'result' => $sheetsRepo
+        ]);
+    }
+
     public function getSheetByFamily(){
         $familyId = $this->getParameter('familyId');
         $superiorId = $this->getParameter('superiorId');
@@ -29,7 +39,6 @@ class SheetsHandler extends BaseHandler {
 
         return $this->getResponse(['result' => $sheets]);
     }
-
 
     public function add(){
         if(!isset($this->params->firstName) || !isset($this->params->currentLevel)  || !isset($this->params->dateOfBirth) ||

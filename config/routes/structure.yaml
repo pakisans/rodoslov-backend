@@ -1,9 +1,29 @@
 get-structure-by-family:
   path: /api/structure
-  controller: App\Core\Controller\StructureController::getStructureByFamilyAction
+  controller: App\Core\Controller\StructureController::getRootByFamilyAction
   methods: [GET]
 
 add-structrure:
   path: /api/structure
   controller: App\Core\Controller\StructureController::addAction
   methods: [POST]
+
+get-childrens:
+  path: /api/childrens
+  controller: App\Core\Controller\StructureController::getChildrensAction
+  methods: [GET]
+
+get-structures:
+  path: /api/structures
+  controller: App\Core\Controller\StructureController::getAllAction
+  methods: [GET]
+
+delete-structrure:
+  path: /api/structure/{id}
+  controller: App\Core\Controller\StructureController::deleteAction
+  methods: [DELETE]
+
+get-parent-and-slibings:
+  path: /api/parent-and-slibings
+  controller: App\Core\Controller\StructureController::getParentAndSlibingsAction
+  methods: [GET]

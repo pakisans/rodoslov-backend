@@ -10,7 +10,6 @@ class Sheets extends Entity {
     private $dateOfDeath;
     private $address;
     private $photo;
-
     private $family;
 
     public function getFirstName(){
@@ -86,7 +85,6 @@ class Sheets extends Entity {
 
     public function getFullName(){
         return $this->getFirstName() .' '.
-            $this->getFamily()->getNameOfFamily() .' '.
             date_format($this->getDateOfBirth(), 'Y') .' - '.
             $this->renderDateOfDeath($this->getDateOfDeath());
     }

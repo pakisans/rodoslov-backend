@@ -8,6 +8,11 @@ get-sheets:
   controller: App\Core\Controller\SheetsController::getAllAction
   methods: [GET]
 
+search-sheets:
+  path: /api/search
+  controller: App\Core\Controller\SheetsController::searchSheetsAction
+  methods: [GET]
+
 add-sheeet:
   path: /api/sheets
   controller: App\Core\Controller\SheetsController::addAction

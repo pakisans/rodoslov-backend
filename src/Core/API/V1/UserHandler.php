@@ -54,7 +54,6 @@ class UserHandler extends BaseHandler {
 
         $this->em->persist($user);
         $this->em->flush();
-
         return $this->getCreatedResponse();
     }
 

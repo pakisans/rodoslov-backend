@@ -37,4 +37,60 @@ class SheetsRepository extends BaseRepository {
             ->getQuery()
             ->getResult();
     }
+
+    public function searchSheets ($query, $deleted = false) {
+        $qb = $this->createQueryBuilder('s')
+            ->select('s')
+            ->leftJoin('s.family', 'f')
+            ->where('s.deleted = :deleted')
+            ->andWhere('f.nameOfFamily LIKE :query')
+            ->orWhere('s.address LIKE :query')
+            ->orWhere('s.firstName LIKE :query')
+            ->orWhere('s.dateOfBirth LIKE :query')
+            ->setParameters([
+                'deleted' => $deleted,
+                'query' => '%' . $query . '%',
+            ]);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getRootSheet ($familyId, $deleted = false) {
+
+        $superiorIds = $this->createQueryBuilder('s')
+        ->select('s.id')
+        ->from('App\Core\Entity\Structure', 'ss')
+        ->where('ss.family =:familyId')
+        ->andWhere('s.id = ss.superior')
+        ->andWhere('ss.deleted = :deleted')
+        ->setParameter('deleted', $deleted)
+        ->setParameter('familyId', $familyId)
+        ->getQuery()
+        ->getResult();
+
+        $subordinateIds = $this->createQueryBuilder('p')
+        ->select('p.id')
+        ->from('App\Core\Entity\Structure', 'pp')
+        ->where('pp.family =:familyId')
+        ->andWhere('p.id = pp.subordinate')
+        ->andWhere('pp.deleted = :deleted')
+        ->setParameter('deleted', $deleted)
+        ->setParameter('familyId', $familyId)
+        ->getQuery()
+        ->getResult();
+
+        return $this->createQueryBuilder('s')
+            ->where('s.id IN (:superiorIds)')
+            ->andWhere('s.id NOT IN (:subordinateIds)')
+            ->andWhere('s.deleted = :deleted')
+            ->andWhere('s.family = :familyId')
+            ->setParameters([
+                'subordinateIds' => $subordinateIds,
+                'superiorIds' => $superiorIds,
+                'deleted' => $deleted,
+                'familyId' => $familyId,
+            ])
+            ->getQuery()
+            ->getResult();
+    }
 }
