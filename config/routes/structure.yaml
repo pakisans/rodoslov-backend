@@ -20,7 +20,7 @@ get-structures:
 
 delete-structrure:
   path: /api/structure/{id}
-  controller: App\Core\Controller\StructureController::deleteAction
+  controller: App\Core\Controller\StructureController::deleteStructureAction
   methods: [DELETE]
 
 get-parent-and-slibings:

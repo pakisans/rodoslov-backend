@@ -12,7 +12,6 @@ class StructureRepository extends BaseRepository
         $this->class = Structure::class;
         parent::__construct($registry);
     }
-
     public function getStructureByFamilyId($familyId, $deleted = false)
     {
         return $this->createQueryBuilder('s')
@@ -66,6 +65,25 @@ class StructureRepository extends BaseRepository
             ->getResult();
     }
 
+    public function isSubordinateParent($familyId, $subordinateId, $deleted = false)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+        $queryBuilder
+            ->select('COUNT(s.id)')
+            ->where('s.family = :familyId')
+            ->andWhere('s.superior = :subordinateId')
+            ->andWhere('s.deleted = :deleted')
+            ->setParameters([
+                'familyId' => $familyId,
+                'subordinateId' => $subordinateId,
+                'deleted' => $deleted
+            ]);
+
+        $result = $queryBuilder->getQuery()->getOneOrNullResult();
+
+        return ($result !== null && $result[1] > 1);
+    }
+
     public function getChildrens($parent, $family, $deleted = false)
     {
         if (empty($parent) || empty($family)) {
@@ -76,7 +94,7 @@ class StructureRepository extends BaseRepository
             $queryBuilder = $this->createQueryBuilder('s');
             $queryBuilder
                 ->where('s.superior = :parent')
-                ->andWhere('s.family = :family')
+                ->andWhere('s.family =:family')
                 ->andWhere('s.deleted =:deleted')
                 ->setParameters([
                     'parent' => $parent,

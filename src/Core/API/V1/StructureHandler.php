@@ -87,7 +87,8 @@ class StructureHandler extends BaseHandler {
 //            return $this->getSubordinateError();
 //        }
 
-        $subordinate->setIsStructure(true);
+//        $subordinate->setIsStructure(true);
+        $superior->setIsStructure(true);
 
         $structure->setSuperior($superior);
         $structure->setSubordinate($subordinate);
@@ -117,5 +118,34 @@ class StructureHandler extends BaseHandler {
         }
 
         $structure = $this->em->getRepository($this->class)->get($id);
+    }
+
+    public function deleteStructure() {
+
+        $id = $this->getParameter($this->idSelector);
+
+        if(!isset($id)) {
+            return $this->getParameterMissingResponse();
+        }
+
+        $entity = $this->em->getRepository($this->class)->find($id);
+        if(!$entity) {
+            return $this->getNotFoundResponse();
+        }
+
+        $familyId = $entity->getFamily()->getId();
+        $subordinateId = $entity->getSubordinate()->getId();
+
+        $isParent = $this->em->getRepository($this->class)->isSubordinateParent($familyId, $subordinateId);
+
+        if($isParent){
+            return $this->getParentDeleteErrorResponse();
+        }
+
+        $entity->setDeleted(true);
+
+        $this->em->flush();
+
+        return $this->getNoContentResponse();
     }
 }

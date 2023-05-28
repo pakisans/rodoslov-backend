@@ -28,4 +28,9 @@ class StructureController extends BaseEntityController {
         $handler = $this->getHandler($request, $this->handlerType);
         return $handler->getChildrens();
     }
+
+    public function deleteStructureAction(Request $request){
+        $handler = $this->getHandler($request, $this->handlerType);
+        return $handler->deleteStructure();
+    }
 }

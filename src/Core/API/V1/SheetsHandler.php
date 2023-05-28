@@ -36,7 +36,6 @@ class SheetsHandler extends BaseHandler {
 
         $sheets = $this->em->getRepository($this->class)->getSheetByFamilyId($familyId);
 
-
         return $this->getResponse(['result' => $sheets]);
     }
 
@@ -76,7 +75,7 @@ class SheetsHandler extends BaseHandler {
     public function edit(){
         $id = $this->params->id;
 
-        if(!isset($this->params->firstName) || !isset($this->params->currentLevel)  || !isset($this->params->dateOfBirth) ||
+        if(!isset($this->params->firstName) || !isset($this->params->currentLevel)  || !isset($this->params->datefBirth) ||
             !isset($this->params->familyId)){
             return $this->getParameterMissingResponse();
         }
