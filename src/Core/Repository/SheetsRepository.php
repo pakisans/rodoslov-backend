@@ -38,19 +38,14 @@ class SheetsRepository extends BaseRepository {
             ->getResult();
     }
 
-    public function searchSheets ($query, $deleted = false) {
+    public function searchSheets($query, $deleted = false) {
         $qb = $this->createQueryBuilder('s')
             ->select('s')
             ->leftJoin('s.family', 'f')
-            ->where('s.deleted = :deleted')
-            ->andWhere('f.nameOfFamily LIKE :query')
-            ->orWhere('s.address LIKE :query')
-            ->orWhere('s.firstName LIKE :query')
-            ->orWhere('s.dateOfBirth LIKE :query')
-            ->setParameters([
-                'deleted' => $deleted,
-                'query' => '%' . $query . '%',
-            ]);
+            ->andWhere('f.nameOfFamily LIKE :query OR s.address LIKE :query OR s.firstName LIKE :query OR s.dateOfBirth LIKE :query')
+            ->setParameter('query', '%' . $query . '%');
+            $qb->andWhere('s.deleted = :deleted')
+            ->setParameter('deleted', false);
 
         return $qb->getQuery()->getResult();
     }

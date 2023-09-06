@@ -24,14 +24,14 @@ class User extends Entity implements UserInterface {
         $this->email = $email;
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
     public function setPassword($password): void
     {
-        $this->$password = $password;
+        $this->password = $password;
     }
 
     public function getToken(){
@@ -94,7 +94,7 @@ class User extends Entity implements UserInterface {
         // TODO: Implement getSalt() method.
     }
 
-    public function getUsername()
+    public function getUsername():string
     {
         return $this->email;
     }
